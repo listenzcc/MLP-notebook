@@ -19,6 +19,9 @@ import plotly.express as px
 
 
 def mk_dataframe(x, y, r, theta, name='noname'):
+    '''
+    Make dataframe for the dataset
+    '''
     df = pd.DataFrame()
     df['x'] = x
     df['y'] = y
@@ -31,7 +34,7 @@ def mk_dataframe(x, y, r, theta, name='noname'):
 
 n = 5000
 m = 2000
-sample = np.random.choice(range(n), m, replace=False)
+sample = np.random.choice(range(n), m, replace=false)
 
 # src
 theta = np.linspace(0, np.pi * 5, n)
