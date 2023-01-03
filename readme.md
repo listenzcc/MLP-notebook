@@ -14,6 +14,11 @@ The formatted page is established in
 https://listenzcc.github.io/MLP-notebook/
 
 ---
+- [Experiment of MLP](#experiment-of-mlp)
+  - [Experiment-2](#experiment-2)
+    - [MLP Improve](#mlp-improve)
+  - [Experiment-1](#experiment-1)
+
 
 ## Experiment-2
 
@@ -41,6 +46,8 @@ The training loss convergences, but the outcome is not satisfied.
 ![loss](experiment-2/doc/loss.png)
 ![outcome](experiment-2/doc/outcome.png)
 ![outcome-2](experiment-2/doc/outcome-2.png)
+
+### MLP Improve
 
 Then, I modifies the structure of the MLP network.
 The new MLP contains one more layer.
