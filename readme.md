@@ -15,6 +15,67 @@ https://listenzcc.github.io/MLP-notebook/
 
 ---
 
+## Experiment-2
+
+The experiment is performed based on experiment-1.
+Firstly, I simplifies the dataset,
+estimating a higher frequency spiral from a lower frequency spiral. 
+
+```python
+
+# src
+theta = np.linspace(0, np.pi * 2, n)
+r = np.linspace(0.2, 0.8, n)
+
+# target
+theta = np.linspace(0, np.pi * 6, n)
+r = np.linspace(0.1, 0.9, n)
+```
+
+![dataset](experiment-2/doc/dataset.png)
+
+![dataset-3d](experiment-2/doc/dataset-2.png)
+
+The training loss convergences, but the outcome is not satisfied.
+
+![loss](experiment-2/doc/loss.png)
+![outcome](experiment-2/doc/outcome.png)
+![outcome-2](experiment-2/doc/outcome-2.png)
+
+Then, I modifies the structure of the MLP network.
+The new MLP contains one more layer.
+
+```python
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.mlp = torchvision.ops.MLP(
+            2, [4, 8, 4, 2], activation_layer=nn.LeakyReLU)
+        self.sig = nn.Tanh()
+
+    def forward(self, x):
+        return self.sig(self.mlp(x))
+```
+
+As it convergences, the output becomes also better
+
+![loss-2](experiment-2/doc/loss-2.png)
+![outcome-3](experiment-2/doc/outcome-3.png)
+
+The outcome suggests the more potential variables, the more accuracy of the estimation,
+Surprisingly, although there are more layers in the MLP, the faster it convergences with a lower loss value.
+The interactive version is following.
+
+<div>
+
+<iframe src='./experiment-2/doc/spiral-1.html' style='width: 800px; height: 800px'></iframe>
+
+<iframe src='./experiment-2/doc/spiral-2.html' style='width: 800px; height: 800px'></iframe>
+
+<div>
+
+---
+
 ## Experiment-1
 
 The experiment is performed to test the edge of the MLP.
