@@ -103,12 +103,12 @@ print('test_data:', test_data.shape)
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.mlp = torchvision.ops.MLP(2, [4, 3, 2], activation_layer=nn.LeakyReLU)
-        self.mlp2 = torchvision.ops.MLP(2, [3, 2], activation_layer=nn.LeakyReLU)
+        self.mlp = torchvision.ops.MLP(
+            2, [4, 8, 4, 2], activation_layer=nn.LeakyReLU)
         self.sig = nn.Tanh()
 
     def forward(self, x):
-        return self.sig(self.mlp2(self.mlp(x)))
+        return self.sig(self.mlp(x))
 
 
 net = Net().cuda()
@@ -152,13 +152,13 @@ df1['name'] = 'pred'
 
 df2 = pd.DataFrame(test_data[:, :2], columns=['x', 'y'])
 df2['idx'] = range(n)
-df2['name'] = 'truth-dst'
+df2['name'] = 'truth-src'
 
 df3 = pd.DataFrame(test_data[:, 2:], columns=['x', 'y'])
 df3['idx'] = range(n)
-df3['name'] = 'truth-src'
+df3['name'] = 'truth-dst'
 
-df4 = pd.DataFrame(output - test_data[:, :2], columns=['x', 'y'])
+df4 = pd.DataFrame(output - test_data[:, 2:], columns=['x', 'y'])
 df4['idx'] = range(n)
 df4['name'] = 'pred - dst'
 

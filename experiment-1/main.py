@@ -34,7 +34,7 @@ def mk_dataframe(x, y, r, theta, name='noname'):
 
 n = 5000
 m = 2000
-sample = np.random.choice(range(n), m, replace=false)
+sample = np.random.choice(range(n), m, replace=False)
 
 # src
 theta = np.linspace(0, np.pi * 5, n)
@@ -153,15 +153,15 @@ n = len(df1)
 df1['idx'] = range(n)
 df1['name'] = 'pred'
 
-df2 = pd.DataFrame(test_data[:, :2], columns=['x', 'y'])
+df2 = pd.DataFrame(test_data[:, 2:], columns=['x', 'y'])
 df2['idx'] = range(n)
 df2['name'] = 'truth-dst'
 
-df3 = pd.DataFrame(test_data[:, 2:], columns=['x', 'y'])
+df3 = pd.DataFrame(test_data[:, :2], columns=['x', 'y'])
 df3['idx'] = range(n)
 df3['name'] = 'truth-src'
 
-df4 = pd.DataFrame(output - test_data[:, :2], columns=['x', 'y'])
+df4 = pd.DataFrame(output - test_data[:, 2:], columns=['x', 'y'])
 df4['idx'] = range(n)
 df4['name'] = 'pred - dst'
 
