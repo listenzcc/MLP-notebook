@@ -15,9 +15,25 @@ https://listenzcc.github.io/MLP-notebook/
 
 ---
 - [Experiment of MLP](#experiment-of-mlp)
+  - [Experiment-3](#experiment-3)
   - [Experiment-2](#experiment-2)
     - [MLP Improve](#mlp-improve)
   - [Experiment-1](#experiment-1)
+
+## Experiment-3
+
+I reverse the radius parameter of the target curve in [experiment-3](experiment-3/main-3.py).
+And the output is fine too.
+
+```python
+# src
+theta = np.linspace(0, np.pi * 2, n)
+r = np.linspace(0.2, 0.8, n)
+
+# target
+theta = np.linspace(0, np.pi * 6, n)
+r = np.linspace(0.9, 0.1, n)
+```
 
 
 ## Experiment-2
