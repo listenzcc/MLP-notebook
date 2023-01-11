@@ -3,7 +3,7 @@
 [MLP](https://en.wikipedia.org/wiki/Multilayer_perceptron "MLP")
 : Multilayer perception,
 
->A multilayer perceptron (MLP) is a fully connected class of feedforward artificial neural network (ANN). The term MLP is used ambiguously, sometimes loosely to mean any feedforward ANN, sometimes strictly to refer to networks composed of multiple layers of perceptrons (with threshold activation); see § Terminology. Multilayer perceptrons are sometimes colloquially referred to as "vanilla" neural networks, especially when they have a single hidden layer.[1]
+> A multilayer perceptron (MLP) is a fully connected class of feedforward artificial neural network (ANN). The term MLP is used ambiguously, sometimes loosely to mean any feedforward ANN, sometimes strictly to refer to networks composed of multiple layers of perceptrons (with threshold activation); see § Terminology. Multilayer perceptrons are sometimes colloquially referred to as "vanilla" neural networks, especially when they have a single hidden layer.[1]
 
 I will make some experiment about it.
 
@@ -14,11 +14,19 @@ The formatted page is established in
 https://listenzcc.github.io/MLP-notebook/
 
 ---
+
 - [Experiment of MLP](#experiment-of-mlp)
+  - [Experiment-4](#experiment-4)
   - [Experiment-3](#experiment-3)
   - [Experiment-2](#experiment-2)
     - [MLP Improve](#mlp-improve)
   - [Experiment-1](#experiment-1)
+
+## Experiment-4
+
+Trying to solve the problem of Maximized Posterior Probabilities Problem.
+
+The MLP is not implemented yet.
 
 ## Experiment-3
 
@@ -35,12 +43,11 @@ theta = np.linspace(0, np.pi * 6, n)
 r = np.linspace(0.9, 0.1, n)
 ```
 
-
 ## Experiment-2
 
 The experiment is performed based on experiment-1.
 Firstly, I simplifies the dataset,
-estimating a higher frequency spiral from a lower frequency spiral. 
+estimating a higher frequency spiral from a lower frequency spiral.
 
 ```python
 
@@ -177,12 +184,12 @@ criterion = nn.MSELoss()
 The model is trained for 1000 times,
 and the outcome ends at
 
-| Step  | Loss(train) | Loss(test) |
-| :---: | :---------: | :--------: |
-| 0960  |   0.0280    |   0.0251   |
-| 0970  |   0.0213    |   0.0251   |
-| 0980  |   0.0223    |   0.0251   |
-| 0990  |   0.0234    |   0.0254   |
+| Step | Loss(train) | Loss(test) |
+| :--: | :---------: | :--------: |
+| 0960 |   0.0280    |   0.0251   |
+| 0970 |   0.0213    |   0.0251   |
+| 0980 |   0.0223    |   0.0251   |
+| 0990 |   0.0234    |   0.0254   |
 
 The dataset of the point clouds are presented in following,
 it contains the 2D and 3D versions,
