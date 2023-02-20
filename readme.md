@@ -22,11 +22,57 @@ https://listenzcc.github.io/MLP-notebook/
     - [MLP Improve](#mlp-improve)
   - [Experiment-1](#experiment-1)
 
+## Experiment-5
+
+It uses the MLP estimates the phase from complex numbers.
+
+$$
+\begin{cases}
+ i^2 &= -1 \\
+ c &= a + i \cdot b \\
+ abs(c) &= \sqrt{c \cdot \hat{c}} \\
+ phase(c) &= arctan(\frac{b}{a})
+\end{cases}
+$$
+
+The MLP is deployed as
+
+```c
+Net(
+  (mlp): MLP(
+    (0): Linear(in_features=2, out_features=4, bias=True)
+    (1): LeakyReLU(negative_slope=0.01, inplace=True)
+    (2): Dropout(p=0.0, inplace=True)
+    (3): Linear(in_features=4, out_features=8, bias=True)
+    (4): LeakyReLU(negative_slope=0.01, inplace=True)
+    (5): Dropout(p=0.0, inplace=True)
+    (6): Linear(in_features=8, out_features=4, bias=True)
+    (7): LeakyReLU(negative_slope=0.01, inplace=True)
+    (8): Dropout(p=0.0, inplace=True)
+    (9): Linear(in_features=4, out_features=1, bias=True)
+    (10): Dropout(p=0.0, inplace=True)
+  )
+  (sig): Tanh()
+)
+```
+
+The output appears the MLP fails to estimate accurately.
+The errors are distributed among the space,
+and the jump part accounts for more error.
+
+![Phase error](./experiment-5/doc/Snipaste_2023-02-20_16-22-37.png)
+
+The histogram graph and error distribution are
+
+![Phase dist](./experiment-5/doc/Snipaste_2023-02-20_16-25-12.png)
+
 ## Experiment-4
 
 Trying to solve the problem of Maximized Posterior Probabilities Problem.
 
 The MLP is not implemented yet.
+
+The session is unfinished.
 
 ## Experiment-3
 
