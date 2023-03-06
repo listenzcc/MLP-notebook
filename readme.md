@@ -24,6 +24,18 @@ https://listenzcc.github.io/MLP-notebook/
 
 ## Experiment-5
 
+It is the complex system,
+the target value is the radian of the complex number.
+The ground truth of the regression is drawn as the following.
+
+<!-- ![ground truth 1](./experiment-5/doc/ground-truth-1.png) -->
+<!-- ![ground truth 2](./experiment-5/doc/ground-truth-2.png) -->
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<img src="./experiment-5/doc/ground-truth-1.png" width=40%></img>
+<img src="./experiment-5/doc/ground-truth-2.png" width=40%></img>
+</div>
+
 It uses the MLP estimates the phase from complex numbers.
 
 $$
