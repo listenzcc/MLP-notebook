@@ -31,9 +31,11 @@ The ground truth of the regression is drawn as the following.
 <!-- ![ground truth 1](./experiment-5/doc/ground-truth-1.png) -->
 <!-- ![ground truth 2](./experiment-5/doc/ground-truth-2.png) -->
 
+<div>
 <div style="display: flex; flex-wrap: wrap; gap: 20px">
 <img src="./experiment-5/doc/ground-truth-1.png" width=40%></img>
 <img src="./experiment-5/doc/ground-truth-2.png" width=40%></img>
+</div>
 </div>
 
 It uses the MLP estimates the phase from complex numbers.
@@ -271,4 +273,4 @@ The 2D and 3D versions are also provided.
 
 <iframe src='./experiment-1/doc/spiral-2.html' style='width: 800px; height: 800px'></iframe>
 
-<div>
+</div>
