@@ -1,0 +1,161 @@
+
+'''
+File: main-6.py
+'''
+
+# %%
+import torch
+import torchvision
+import torch.nn as nn
+
+import numpy as np
+
+import pandas as pd
+import plotly.express as px
+
+from tqdm.auto import tqdm
+
+# %%
+num_features = 3
+
+# %%
+
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.mlp = torchvision.ops.MLP(
+            num_features, [4, 10, 4, 1], activation_layer=nn.LeakyReLU)
+        self.sig = nn.Tanh()
+        # self.sig = nn.ReLU()
+        # self.sig = nn.LogSigmoid()
+        self.dropout = nn.Dropout(0.2)
+
+    def forward(self, x):
+        output = self.mlp(x)
+        # output = self.dropout(output)
+        return self.sig(output)
+
+
+net = Net().cuda()
+
+# lr = 1e-2
+# optimizer = torch.optim.AdamW(net.parameters(), lr)
+optimizer = torch.optim.AdamW(net.parameters())
+criterion = nn.MSELoss()
+# criterion = nn.LogSigmoid()
+net
+
+
+# %%
+
+[a, b] = np.meshgrid(range(100), range(100))
+a = a.ravel() / 100
+b = b.ravel() / 100
+
+np.random.shuffle(a)
+np.random.shuffle(b)
+
+num_train = 2000
+num_test = 1000
+
+X_train = np.random.random((num_train, num_features))
+X_train[:, 0] = a[:num_train]
+X_train[:, 1] = b[:num_train]
+X_train[:, 2] *= 0.1
+# y_train = np.random.random((num_train, 1))
+y_train = np.cos(np.sum(X_train, axis=1) * 10)  # * 0.5 + 0.5
+y_train = y_train[:, np.newaxis]
+idx_train = [e for e in range(num_train)]
+
+X_test = np.random.random((num_test, num_features))
+X_test[:, 0] = a[-num_test:]
+X_test[:, 1] = b[-num_test:]
+# y_test = np.sum(X_test, axis=1) / num_features
+y_test = np.cos(np.sum(X_test[:, :2], axis=1) * 10)  # * 0.5 + 0.5
+# y_test = np.cos((X_test[:, 0] - X_test[:, 1]) * 8)  # * 0.5 + 0.5
+y_test = y_test[:, np.newaxis]
+# idx_test = np.array([e for e in range(num_test)])
+# y_test = np.cos(idx_test / num_test * 30) * 0.5 + 0.5
+
+print(X_train.shape,
+      y_train.shape,
+      X_test.shape,
+      y_test.shape)
+
+df = pd.DataFrame(X_test[:, :2], columns=['x', 'y'])
+df['z'] = y_test
+px.scatter(df, x='x', y='y', color='z').show()
+
+df = pd.DataFrame(X_train[:, :2], columns=['x', 'y'])
+df['z'] = y_train
+px.scatter(df, x='x', y='y', color='z').show()
+
+# %%
+training_loss = [1000000000]
+testing_loss = [1000000000]
+
+X1 = torch.Tensor(X_test).cuda()
+y1 = torch.Tensor(y_test).cuda()
+
+k = 100
+
+for j in tqdm(range(10000)):
+    np.random.shuffle(idx_train)
+
+    X = torch.Tensor(X_train[idx_train[:k]]).cuda()
+    y = torch.Tensor(y_train[idx_train[:k]]).cuda()
+
+    loss = criterion(net(X), y)
+    loss_test = criterion(net(X1), y1)
+
+    l = loss.item()
+    l_test = loss_test.item()
+
+    # if l < training_loss[-1] and l_test < testing_loss[-1]:
+    # if l_test < testing_loss[-1]:
+    # if l < training_loss[-1]:
+    if True:
+        optimizer.zero_grad()
+        loss.backward()
+        # loss_test.backward()
+        optimizer.step()
+        training_loss.append(l)
+        testing_loss.append(l_test)
+        print(j, l, l_test)
+
+training_loss = training_loss[1:]
+testing_loss = testing_loss[1:]
+
+# fig = px.scatter(training_loss, title='Training Loss')
+# fig.show()
+
+# %%
+df1 = pd.DataFrame(training_loss, columns=['loss'])
+df1['type'] = 'training'
+
+df2 = pd.DataFrame(testing_loss, columns=['loss'])
+df2['type'] = 'testing'
+
+df_loss = pd.concat([df1, df2])
+
+fig = px.line(df_loss, y='loss', color='type')
+fig.show()
+
+# %%
+pred = net(X1).detach().cpu().numpy().ravel()
+pred.shape
+
+df = pd.DataFrame(X_test[:, :2], columns=['x', 'y'])
+df['z'] = y_test
+px.scatter(df, x='x', y='y', color='z', title='Test dist.').show()
+
+df = pd.DataFrame(X_test[:, :2], columns=['x', 'y'])
+df['z'] = pred
+px.scatter(df, x='x', y='y', color='z', title='Pred dist.').show()
+
+df = pd.DataFrame(X_train[:, :2], columns=['x', 'y'])
+df['z'] = y_train
+px.scatter(df, x='x', y='y', color='z', title='Train dist.').show()
+
+# %%

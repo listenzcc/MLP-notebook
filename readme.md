@@ -16,11 +16,27 @@ https://listenzcc.github.io/MLP-notebook/
 ---
 
 - [Experiment of MLP](#experiment-of-mlp)
+  - [Experiment-6](#experiment-6)
+  - [Experiment-5](#experiment-5)
   - [Experiment-4](#experiment-4)
   - [Experiment-3](#experiment-3)
   - [Experiment-2](#experiment-2)
     - [MLP Improve](#mlp-improve)
   - [Experiment-1](#experiment-1)
+
+## Experiment-6
+
+机器学习难，难在观测到的数据稀疏，从稀疏数据中估计总体分布如隔岸观火，如隔靴搔痒，如雾里看花。因此，交叉验证方法能利用有限的数据对估计出的分类器进行辅助评价和验证。
+
+本文的结果图为 3x2 的 6 宫格图，
+
+- 顶部两张图分别代表真实分布和估计出的分布，它们越相似代表估计效果越好。
+- 中间两张图分别代表训练集和验证集的分布，严格来说这种验证集的选择方式是相当理想的，因为它补全了训练集中没有观测到的位置，从而可以在训练过程之外，比较有效地对模型进行评价。
+- 底部两张图分别代表损失函数在训练过程中的变化趋势，以及估计分布与真实分布之间的差异。我们主要关注损失函数，两条曲线分别是训练集的损失函数（红色）和验证集的损失函数（蓝色）。
+
+从损失函数的变化规律可以看到，虽然训练集损失函数在训练过程中单调下降，但验证集的损失函数却呈现出两个截然不同的趋势。当训练效果较好时，验证集的损失函数同样单调下降。而训练效果不佳时，验证集的损失函数几乎呈现单调上升的趋势，这种现象表示 MLP 模型陷入了过拟合的尴尬境地，也就是说它的估计准确率必然不佳。
+
+另外，从估计结果来看，本文使用的分布函数对于如此小规模的 MLP 来说过于复杂了，但我觉得这种复杂度对于说明验证集的作用是比较合适的。
 
 ## Experiment-5
 
@@ -51,7 +67,7 @@ $$
 
 The MLP is deployed as
 
-```c
+```
 Net(
   (mlp): MLP(
     (0): Linear(in_features=2, out_features=4, bias=True)
@@ -244,12 +260,12 @@ criterion = nn.MSELoss()
 The model is trained for 1000 times,
 and the outcome ends at
 
-| Step | Loss(train) | Loss(test) |
-| :--: | :---------: | :--------: |
-| 0960 |   0.0280    |   0.0251   |
-| 0970 |   0.0213    |   0.0251   |
-| 0980 |   0.0223    |   0.0251   |
-| 0990 |   0.0234    |   0.0254   |
+| Step  | Loss(train) | Loss(test) |
+| :---: | :---------: | :--------: |
+| 0960  |   0.0280    |   0.0251   |
+| 0970  |   0.0213    |   0.0251   |
+| 0980  |   0.0223    |   0.0251   |
+| 0990  |   0.0234    |   0.0254   |
 
 The dataset of the point clouds are presented in following,
 it contains the 2D and 3D versions,
